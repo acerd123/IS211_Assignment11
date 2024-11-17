@@ -5,16 +5,16 @@ import os
 
 app = Flask(__name__)
 
-# Global list to hold To Do items
+
 todo_list = []
 
-# Load list from file if it exists
+
 file_name = 'todo_list.pkl'
 if os.path.exists(file_name):
     with open(file_name, 'rb') as file:
         todo_list = pickle.load(file)
 
-# HTML template
+
 html_template = """
 <!DOCTYPE html>
 <html>
@@ -89,18 +89,18 @@ def submit():
     email = request.form.get('email')
     priority = request.form.get('priority')
 
-    # Validate email
+    
     if not re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', email):
         return redirect('/')
 
-    # Validate priority
+    
     if priority not in ['Low', 'Medium', 'High']:
         return redirect('/')
 
-    # Add item to the list
+    
     todo_list.append({'task': task, 'email': email, 'priority': priority, 'completed': False})
     
-    # Sort list by priority
+    
     priority_order = {'High': 1, 'Medium': 2, 'Low': 3}
     todo_list.sort(key=lambda x: priority_order[x['priority']])
 
